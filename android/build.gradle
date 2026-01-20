@@ -1,0 +1,53 @@
+buildscript {
+    ext {
+        buildToolsVersion = "35.0.0" 
+        minSdkVersion = 24
+        compileSdkVersion = 35 // Change this to 35
+        targetSdkVersion = 34  // Keep this at 34
+        ndkVersion = "27.1.12297006"
+        kotlinVersion = "1.8.0" 
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.5.0") // Ensure Gradle plugin matches
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath 'com.google.gms:google-services:4.4.2'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    
+   configurations.all {
+        resolutionStrategy {
+            force "com.swmansion.rnscreens:react-native-screens:3.31.1"
+            // Ensure we don't accidentally pull in a broken core version
+            force "androidx.core:core:1.13.1"
+            force "androidx.core:core-ktx:1.13.1"
+        }
+    }
+}
+
+subprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "17" 
+            
+           if (project.name.contains('react-native-screens')) {
+                freeCompilerArgs += [
+                    "-Xskip-metadata-version-check",
+                    "-Xallow-jvm-ir-dependencies"
+                ]
+            }
+        }
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"

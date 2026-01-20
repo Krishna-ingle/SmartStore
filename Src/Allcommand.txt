@@ -1,0 +1,48 @@
+command for wireless mobile connect and run
+
+1 =adb devices
+
+2=adb tcpip 5555
+output = restarting in TCP mode port: 5555
+
+3 =adb shell ip route
+output =192.168.1.1 dev wlan0  src 192.168.1.8
+Copy the src IP — e.g. 192.168.1.8
+
+ 4. Disconnect USB & connect wirelessly:
+ run = git push origin main
+
+ output =connected to 192.168.1.8:5555
+
+ 5 = npx react-native run-android
+run app
+
+6 = disconnect the divese
+ run = adb disconnect
+
+ :\Users\aarti\Desktop\Smart_store>adb devices
+List of devices attached
+d210d4df0507    device
+
+
+C:\Users\aarti\Desktop\Smart_store>adb tcpip 5555
+restarting in TCP mode port: 5555
+
+C:\Users\aarti\Desktop\Smart_store>adb shell ip route
+100.0.0.0/8 dev ccmni0 proto kernel scope link src 100.93.67.58
+192.168.1.0/24 dev wlan0 proto kernel scope link src 192.168.1.5
+
+C:\Users\aarti\Desktop\Smart_store>adb connect 192.168.1.5:5555
+connected to 192.168.1.5:5555
+
+C:\Users\aarti\Desktop\Smart_store>adb devices
+List of devices attached
+192.168.1.5:5555        device
+
+---------------------------------------------------------------------
+ for gradient text run this command 
+ npm install @react-native-masked-view/masked-view react-native-linear-gradient
+
+
+
+

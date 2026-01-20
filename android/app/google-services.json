@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "116572016725",
+    "project_id": "smartstore-cf7f6",
+    "storage_bucket": "smartstore-cf7f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116572016725:android:3ef789bd3549797365c4dc",
+        "android_client_info": {
+          "package_name": "com.smart_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHJiYGXFchYug_-S-uYkX3bmi2DzN_SI8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

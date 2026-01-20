@@ -1,0 +1,24 @@
+export type RootStackParamList = {
+  LoginScreen: undefined;
+  homeScreen: undefined;
+  userTypeScreen: undefined;
+  userRegistration: undefined;
+  forgotPassWordScreen: undefined;
+  otpScreen: {itemEmail:string};
+  notificationScreen: undefined;
+  productDescScreen: undefined;
+  emailAuthScreen: undefined; 
+  AdminHomeScreen:undefined;
+  OrderScreen:undefined;
+  BackUpScreen:undefined;
+  MainHomePage:undefined;
+  AddProductScreen:undefined;
+  EmployeeDetails:undefined;
+  TodaySalesScreen:undefined;
+  AdvertisementScreen:undefined;
+  AddShopDetailsScreen: undefined;
+  ShopListScreen: undefined;
+  AdminProfileScreen: undefined;
+  ProductListScreen: { shopId: string };
+  EmployeeHomeScreen: undefined;
+};
