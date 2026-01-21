@@ -1,7 +1,10 @@
-import React, { useRef, useMemo, useEffect} from "react";
-import { Animated, SafeAreaView, StatusBar, StyleSheet, ScrollView,Text,
+import React, { useRef, useMemo, useEffect } from "react";
+import {
+  Animated, SafeAreaView, StatusBar, StyleSheet, ScrollView, Text,
   View,
- } from "react-native";
+  FlatList,
+  Alert
+} from "react-native";
 import { LocateIcon, MapIcon, MapPin, Search, ShoppingCart } from "lucide-react-native";
 import colors from "../../Asset/Colors/colors";
 import HomeHeader from "./UserHomePageCompo/headerCompo";
@@ -10,11 +13,32 @@ import LinearGradient from "react-native-linear-gradient";
 import { AddverisementCerdViewCompo } from "./UserHomePageCompo/AdvertiseCardViewCompo";
 import { ProductCardView } from "./UserHomePageCompo/productCardView";
 import ShopListScreen from "./shopListScreen";
+import { TopShopCard } from "./UserHomePageCompo/TopShopCardView";
 
-const BIG_HEADER_HEIGHT = 140; 
+const BIG_HEADER_HEIGHT = 140;
 const SMALL_HEADER_HEIGHT = 65;
 
 export const UserHomeScreen = () => {
+  const mockShops = [
+    {
+      shopId: "696173b13cfe40283ade591b",
+      shopName: "Ram Milk Dairy",
+      city: "Murtizapur",
+      rating: 8.0,
+      totalProducts: 12,
+      bannerUrl: "",
+      isApproved: false
+    },
+    {
+      shopId: "2abc123def456ghi789",
+      shopName: "Gupta General Store",
+      city: "Mumbai",
+      rating: 9.2,
+      totalProducts: 45,
+      bannerUrl: "",
+      isApproved: true
+    },
+  ]
   const scrollY = useRef(new Animated.Value(0)).current;
 
   const headerClamp = useMemo(
@@ -33,50 +57,50 @@ export const UserHomeScreen = () => {
     extrapolate: "clamp",
   });
 
-useEffect(() => {
-  let lastUpdate = 0;
-  const UPDATE_INTERVAL = 16; // 60fps
-  
-  const listener = scrollY.addListener(({ value }) => {
-    const now = Date.now();
-    
-    // Only update 60fps max (perfect smoothness)
-    if (now - lastUpdate < UPDATE_INTERVAL) return;
-    lastUpdate = now;
-    
-    const progress = Math.max(0, Math.min(1, value / BIG_HEADER_HEIGHT));
-    
-    // Direct hex colors - FASTEST
-    const colors = [
-      '#AFE79E', // Green
-      '#B8E2B5', 
-      '#C1E8C9',
-      '#D4EFF4', 
-      '#E8F5E8',
-      '#F0F8F0',
-      '#FFFFFF'  // White
-    ];
-    
-    const colorIndex = Math.floor(progress * (colors.length - 1));
-    const color = colors[colorIndex];
-    
-    // ✅ INSTANT color change (no animation)
-    StatusBar.setBackgroundColor(color, false);
-    StatusBar.setBarStyle('dark-content', false);
-  });
+  useEffect(() => {
+    let lastUpdate = 0;
+    const UPDATE_INTERVAL = 16; // 60fps
 
-  return () => scrollY.removeListener(listener);
-}, []);
+    const listener = scrollY.addListener(({ value }) => {
+      const now = Date.now();
+
+      // Only update 60fps max (perfect smoothness)
+      if (now - lastUpdate < UPDATE_INTERVAL) return;
+      lastUpdate = now;
+
+      const progress = Math.max(0, Math.min(1, value / BIG_HEADER_HEIGHT));
+
+      // Direct hex colors - FASTEST
+      const colors = [
+        '#AFE79E', // Green
+        '#B8E2B5',
+        '#C1E8C9',
+        '#D4EFF4',
+        '#E8F5E8',
+        '#F0F8F0',
+        '#FFFFFF'  // White
+      ];
+
+      const colorIndex = Math.floor(progress * (colors.length - 1));
+      const color = colors[colorIndex];
+
+      // ✅ INSTANT color change (no animation)
+      StatusBar.setBackgroundColor(color, false);
+      StatusBar.setBarStyle('dark-content', false);
+    });
+
+    return () => scrollY.removeListener(listener);
+  }, []);
 
 
 
 
 
   const smallHeaderHeight = headerClamp.interpolate({
-  inputRange: [0, BIG_HEADER_HEIGHT],
-  outputRange: [SMALL_HEADER_HEIGHT + 44, SMALL_HEADER_HEIGHT],
-  extrapolate: "clamp",
-});
+    inputRange: [0, BIG_HEADER_HEIGHT],
+    outputRange: [SMALL_HEADER_HEIGHT + 44, SMALL_HEADER_HEIGHT],
+    extrapolate: "clamp",
+  });
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#DFF6D8" }}>
       <StatusBar barStyle="dark-content" backgroundColor="#AFE79E" />
@@ -93,10 +117,10 @@ useEffect(() => {
       <Animated.View
         style={[
           styles.smallHeaderContainer,
-          { 
-           transform: [{ translateY: smallHeaderY }],
-           backgroundColor: "#FFFFFF",
-      marginTop: -10, 
+          {
+            transform: [{ translateY: smallHeaderY }],
+            backgroundColor: "#FFFFFF",
+            marginTop: -10,
           }
         ]}
       >
@@ -132,10 +156,10 @@ useEffect(() => {
           locations={[0.0, 0.9]}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
-          style={{ marginHorizontal: 10, paddingTop:20 }}
+          style={{ marginHorizontal: 10, paddingTop: 20 }}
         >
           <View >
-            <AddverisementCerdViewCompo/>
+            <AddverisementCerdViewCompo />
           </View>
         </LinearGradient>
 
@@ -167,12 +191,36 @@ useEffect(() => {
           <ProductCardView />
         </LinearGradient>
 
+        {/* popular shop section */}
         <View style={{ backgroundColor: "#f2f5f0", width: '100%', paddingBottom: 40 }}>
           <Text style={{
             marginLeft: 20, fontWeight: '600',
             fontSize: 14.8,
           }}>popular Shops</Text>
-          <ShopListScreen />
+          <View style={{backgroundColor:"#f5f5f5"}}>
+            <FlatList
+            data={mockShops}
+            numColumns={1}
+             key="shopsList" 
+            keyExtractor={(item) => item.shopId}
+            renderItem={({ item }) => (
+              <TopShopCard
+                shopId={item.shopId}
+                shopName={item.shopName}
+                city={item.city}
+                rating={item.rating}
+                totalProducts={item.totalProducts}
+                isApproved={item.isApproved}
+                bannerUrl={item.bannerUrl}
+                // onPress={() => navigation.navigate('ShopDetails', { shopId: item.shopId })}
+                onPress = {() => Alert.alert("click")}
+              />
+            )}
+            contentContainerStyle={{ padding: 8 }}
+          />
+          </View>
+          
+
 
         </View>
       </Animated.ScrollView>
@@ -192,16 +240,16 @@ const styles = StyleSheet.create({
 
   smallHeaderContainer: {
     position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  height: SMALL_HEADER_HEIGHT,
-  zIndex: 10,
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: -2 },
-  shadowOpacity: 0.12,        // ✅ STATIC VALUE - No animation
-  shadowRadius: 16,
-  elevation: 12,   
+    top: 0,
+    left: 0,
+    right: 0,
+    height: SMALL_HEADER_HEIGHT,
+    zIndex: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.12,        // ✅ STATIC VALUE - No animation
+    shadowRadius: 16,
+    elevation: 12,
   },
 
   smallHeaderContent: {
