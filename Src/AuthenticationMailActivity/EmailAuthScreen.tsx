@@ -29,16 +29,24 @@ export const emailAuthScreen = () => {
   const dispatch = useDispatch();
   // In your handleSendOTP function:
 const handleSendOTP = async () => {
+  if (!userEmail) {
+    Alert.alert("Error", "Please enter email");
+    return;
+  }
+
   try {
+    
     const result = await AuthAPI.sendOTP(userEmail);
     dispatch(setEmail(userEmail));
-    Alert.alert('Success', result.message, [
-      { text: 'OK', onPress: () => navigation.navigate("otpScreen", { itemEmail: userEmail }) }
+    Alert.alert("Success", result.message, [
+      { text: "OK", onPress: () => navigation.navigate("otpScreen", { itemEmail: userEmail }) }
     ]);
   } catch (error: any) {
-    Alert.alert('Error', error.message);
+    Alert.alert("Error", error.message || "Something went wrong");
+  } finally {
   }
 };
+
 
   return (
     <SafeAreaView style={{ flex: 1,backgroundColor:colors.white}}
@@ -61,9 +69,7 @@ const handleSendOTP = async () => {
           <Button
             title="Get Otp"
             onPress={() =>{
-              // handleSendOTP();
-            dispatch(setEmail(userEmail));
-            navigation.navigate('userRegistration');
+              handleSendOTP();
               }}
             width="100%"
             height={50}

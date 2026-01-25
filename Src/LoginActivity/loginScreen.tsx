@@ -20,6 +20,8 @@ import colors from "../Asset/Colors/colors";
 import { useDispatch } from "react-redux";
 import { setEmail } from "../Redux/emailSlice";
 import { setRole } from "../Redux/Slices/roleSlice";
+import { setUserData } from "../Redux/Slices/userDataSlice";
+import { setUserSelectCity } from "../Redux/Slices/userSelectedCitySlice";
 
 // API import
 import { loginApi } from "./LoginApi";
@@ -81,7 +83,6 @@ const LoginScreen = () => {
   const navigateBasedOnRole = (userType: string, userData: any) => {
     // Store user data in Redux
     dispatch(setEmail(email));
-    dispatch(setRole(userData));
 
     switch (userType.toUpperCase()) {
       case 'USER':
@@ -104,16 +105,17 @@ const LoginScreen = () => {
     if (!validateForm()) {
       return;
     }
-
+   
     setIsLoading(true);
 
     try {
       const result = await loginApi(email, password, role);
 
       if (result.success) {
-        console.log('Acess Token:', result.data?.accessToken);
-        console.log('Refresh Token:', result.data?.refreshToken);
-        console.log('responce data = ',result);
+        console.log('responce data on Screen  = ',result.data?.userData);
+        dispatch(setUserData({ userData: result.data?.userData }));
+        dispatch(setUserSelectCity({ selectCity: result.data?.userData.city || '' }));
+        console.log("store data succesfully set");
         Alert.alert('Success', 'Login successful!', [
           {
             text: 'OK',

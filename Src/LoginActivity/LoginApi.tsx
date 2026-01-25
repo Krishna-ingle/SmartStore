@@ -1,6 +1,5 @@
 import { TokenStorage } from "../Services/TokenStorage";
 import { Alert } from "react-native";
-
 // services/loginApi.ts
 export interface LoginRequest {
   email: string;
@@ -25,6 +24,7 @@ export const loginApi = async (
   password: string,
   userType: string
 ): Promise<LoginResponse> => {
+
   try {
     const requestBody: LoginRequest = {
       email: email.trim(),
@@ -53,7 +53,7 @@ export const loginApi = async (
     const accessToken = responseData.accessToken;
     const refreshToken = responseData.refreshToken;
     const userData = responseData.userData;
-    
+    console.log('User data dispatched to store:', userData);
     console.log('🔍 DEBUG - Response keys:', responseData);
     console.log('🔍 DEBUG - Response keys:', Object.keys(responseData));
     if(accessToken && refreshToken){

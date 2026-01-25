@@ -14,17 +14,47 @@ import { AddverisementCerdViewCompo } from "./UserHomePageCompo/AdvertiseCardVie
 import { ProductCardView } from "./UserHomePageCompo/productCardView";
 import ShopListScreen from "./shopListScreen";
 import { TopShopCard } from "./UserHomePageCompo/TopShopCardView";
-
+// redux 
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../Redux/Store";
+import { ApiHelper } from "../../Services/ApiHelper";
 const BIG_HEADER_HEIGHT = 140;
 const SMALL_HEADER_HEIGHT = 65;
 
+
+
 export const UserHomeScreen = () => {
+
+  const currentCityObj = useSelector((state: RootState)=>state.SelectedCity);
+  const currentCity = currentCityObj?.selectCity || 'Select city'; // ✅ STRING!
+
+  useEffect(() => {
+    if (currentCity !== 'Select city') {
+      fetchShop();
+    }
+  }, [currentCity]);
+
+  const fetchShop = async () => {
+    try {
+      const response = await ApiHelper.makeApiCall(
+        `/auth/shops/akola`,  // ✅ "Akola"
+        'GET',
+        null
+      );
+      console.log("✅ SUCCESS:", response);
+    } catch(error) {
+      console.log("❌ FAILED:", error);
+    }
+  }
+
   const mockShops = [
     {
       shopId: "696173b13cfe40283ade591b",
       shopName: "Ram Milk Dairy",
       city: "Murtizapur",
       rating: 8.0,
+      openingTime: "8:00",
+      closingTime: "21:00",
       totalProducts: 12,
       bannerUrl: "",
       isApproved: false
@@ -34,6 +64,8 @@ export const UserHomeScreen = () => {
       shopName: "Gupta General Store",
       city: "Mumbai",
       rating: 9.2,
+      openingTime: "9:00 AM",
+      closingTime: "8:00 PM",
       totalProducts: 45,
       bannerUrl: "",
       isApproved: true
@@ -209,6 +241,8 @@ export const UserHomeScreen = () => {
                 shopName={item.shopName}
                 city={item.city}
                 rating={item.rating}
+                openingTime={item.openingTime}
+                closingTime={item.closingTime}
                 totalProducts={item.totalProducts}
                 isApproved={item.isApproved}
                 bannerUrl={item.bannerUrl}

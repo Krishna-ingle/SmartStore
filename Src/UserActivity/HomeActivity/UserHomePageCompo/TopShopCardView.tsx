@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,8 @@ import {
   Dimensions,
 } from 'react-native';
 import colors from '../../../Asset/Colors/colors';
-import { Star, StarIcon } from 'lucide-react-native';
+import { AlignRight, MoveRight, Star, StarIcon, Verified } from 'lucide-react-native';
+import { background } from '@cloudinary/url-gen/qualifiers/focusOn';
 
 const { width } = Dimensions.get('window');
 
@@ -17,6 +18,8 @@ interface TopShopCardProps {
   shopName: string;
   city: string;
   rating: number;
+  openingTime: string;
+  closingTime: string;
   totalProducts: number;
   isApproved: boolean;
   bannerUrl?: string;
@@ -27,11 +30,47 @@ export const TopShopCard = ({
   shopName,
   city,
   rating,
+  openingTime,
+  closingTime,
   totalProducts,
   isApproved,
   bannerUrl,
   onPress,
 }: TopShopCardProps) => {
+
+
+
+  
+  const [isOpenNow, setIsOpenNow] = useState(false);
+  useEffect(() => {
+    const checkShopStatus = () => {
+      if (!openingTime || !closingTime) {
+        setIsOpenNow(false);
+        return;
+      }
+
+      // Get current time in 24hr format (HH:MM)
+      const now = new Date();
+      const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+      
+      // Convert times to minutes for comparison
+      const [openH, openM] = openingTime.split(':').map(Number);
+      const [closeH, closeM] = closingTime.split(':').map(Number);
+      const [nowH, nowM] = currentTime.split(':').map(Number);
+      
+      const openMinutes = openH * 60 + openM;
+      const closeMinutes = closeH * 60 + closeM;
+      const currentMinutes = nowH * 60 + nowM;
+      
+      // ✅ Shop is OPEN if current time is BETWEEN open and close
+      setIsOpenNow(currentMinutes >= openMinutes && currentMinutes <= closeMinutes);
+    };
+     // Check every minute
+    const interval = setInterval(checkShopStatus, 60000);
+    checkShopStatus(); // Check immediately
+
+    return () => clearInterval(interval);
+  }, [openingTime, closingTime]);
   return (
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.9}>
       {/* Banner Image */}
@@ -49,11 +88,18 @@ export const TopShopCard = ({
       <View style={styles.imageOverlay} />
 
       {/* Approved Badge */}
-      {isApproved && (
+      
         <View style={styles.approvedBadge}>
-          <Text style={styles.approvedText}>Verified</Text>
+          {isOpenNow ? (
+        <View style={styles.openBadge}>
+          <Text style={styles.openText}>Open</Text>
+        </View>
+      ) : (
+        <View style={styles.closedBadge}>
+          <Text style={styles.closedText}>Closed</Text>
         </View>
       )}
+        </View>
 
       {/* Content */}
       <View style={styles.content}>
@@ -61,7 +107,11 @@ export const TopShopCard = ({
         <View style={styles.headerRow}>
           <Text style={styles.shopName} numberOfLines={1}>
             {shopName}
-          </Text>
+            {
+              isApproved && <Verified size={18} color={colors.white} 
+              style={{marginLeft:4,backgroundColor:colors.gradientColorone,borderRadius:20,padding:10}} fill={colors.gradientColorone} />
+            }
+            </Text>
           <View style={styles.ratingBadge}>
             <Text style={styles.rating}>{rating.toFixed(1)}</Text>
           </View>
@@ -70,12 +120,13 @@ export const TopShopCard = ({
         {/* Location & Products */}
         <View style={styles.infoRow}>
           <Text style={styles.city}>{city}</Text>
+          <Text style={styles.time}>{openingTime} - {closingTime}</Text>
           
         </View>
 
         {/* Bottom gradient & CTA */}
         <View style={styles.bottomGradient}>
-          <Text style={styles.ctaText}>View {totalProducts} Products & More..</Text>
+          <Text style={styles.ctaText}>{totalProducts} items Ready for you..</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -142,10 +193,10 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   ratingBadge: {
-    backgroundColor: '#00D084',
+    backgroundColor: "#00000",
     paddingHorizontal: 12,
-    paddingVertical: 2,
-    borderRadius: 10,
+    paddingVertical: 1,
+    borderRadius: 8,
     minWidth: 50,
     alignItems: 'center',
     marginTop: 4
@@ -153,7 +204,7 @@ const styles = StyleSheet.create({
   rating: {
     fontSize: 16,
     fontWeight: '900',
-    color: '#fff',
+    color: colors.white,
   },
   infoRow: {
     flexDirection: 'row',
@@ -165,6 +216,10 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#666',
     fontWeight: '600',
+  },
+  time: {
+    fontSize: 13,
+    color: '#666',
   },
   productsBadge: {
     backgroundColor: '#f8f9fa',
@@ -197,6 +252,28 @@ const styles = StyleSheet.create({
   ctaText: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#00D084',
+    color: colors.gradientColorone,
   },
+
+  openBadge: {
+  position: 'absolute',
+  top: 12,
+  left: 12,
+  backgroundColor: 'rgba(0,200,83,0.95)',
+  paddingHorizontal: 12,
+  paddingVertical: 6,
+  borderRadius: 20,
+},
+closedBadge: {
+  position: 'absolute',
+  top: 12,
+  left: 12,
+  backgroundColor: 'rgba(220,53,69,0.95)',
+  paddingHorizontal: 12,
+  paddingVertical: 6,
+  borderRadius: 20,
+},
+openText: { color: '#fff', fontSize: 12, fontWeight: '700' },
+closedText: { color: '#fff', fontSize: 12, fontWeight: '700' },
+
 });

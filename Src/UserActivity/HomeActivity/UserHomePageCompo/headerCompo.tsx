@@ -14,6 +14,11 @@ import colors from "../../../Asset/Colors/colors";
 import { Bell, MenuIcon, PersonStanding, Search, ShoppingCart, User } from "lucide-react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { AddverisementCerdViewCompo } from "./AdvertiseCardViewCompo";
+import cities from "../../../Asset/Data/cities.json";
+// redux
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { RootState } from "../../../Redux/Store";
+import { setUserSelectCity } from "../../../Redux/Slices/userSelectedCitySlice";
 
 const CITIES = ["Murtizapur", "Akola", "Karanja", "Amaravati", "Nagpur", "Badnera", "Shegaon"];
 
@@ -30,6 +35,8 @@ type Props = {
 };
 
 export default function GroceryHeaderSearch({
+
+
   locationTitle = "Sai Nagar, Wandongri..",
   locationValue = "Set your location",
   onPressBack = () => { },
@@ -37,26 +44,44 @@ export default function GroceryHeaderSearch({
   onChangeQuery = () => { },
   onSubmitSearch = () => { },
   onPressCart = () => { },
-  onPressBell = () => { },
+  onPressBell = () => {
+  },
   onCityChange = () => { },
 }: Props) {
+
+
+  const dispatch = useDispatch();
+  const userData = useSelector((state: RootState) => state.userData.userData);
+
+
+  const currentCity = useSelector(
+    (state: RootState) => state.SelectedCity.selectCity,
+    shallowEqual
+  );
+
   const [isCityModalOpen, setIsCityModalOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState<string>(CITIES[0]);
   const [cityQuery, setCityQuery] = useState("");
+
 
   const filteredCities = useMemo(() => {
     const s = cityQuery.trim().toLowerCase();
-    if (!s) return CITIES;
-    return CITIES.filter((c) => c.toLowerCase().includes(s));
+    if (!s) return cities.map(c => `${c.city}, ${c.state}`);
+    return cities
+      .map(c => `${c.city}, ${c.state}`)
+      .filter(c => c.toLowerCase().includes(s));
   }, [cityQuery]);
+
 
   const closeCityModal = () => setIsCityModalOpen(false);
 
-  const selectCity = (city: string) => {
-    setSelectedCity(city);
-    closeCityModal();
-    onCityChange(city); // now no TS error
+  const selectCity = (fullCityName: string) => {
+    const cityName = fullCityName.split(',')[0];
+    console.log('🚀 Dispatching city:', cityName);
+    dispatch(setUserSelectCity(cityName));
+    setIsCityModalOpen(false);
+    setCityQuery("");
   };
+
 
 
   const PLACEHOLDERS = [
@@ -85,10 +110,10 @@ export default function GroceryHeaderSearch({
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
       style={{
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    backgroundColor:colors.gradientColorTow,
-    paddingBottom:10
+        borderBottomLeftRadius: 50,
+        borderBottomRightRadius: 50,
+        backgroundColor: colors.gradientColorTow,
+        paddingBottom: 10
       }}
     >
       <View style={styles.header}>
@@ -107,7 +132,7 @@ export default function GroceryHeaderSearch({
               </View>
 
               <Text numberOfLines={1} style={styles.locationValue}>
-                {selectedCity || locationValue}
+                {currentCity && typeof currentCity === 'string' ? currentCity : userData?.city || "Select city"}
               </Text>
             </View>
 
@@ -156,19 +181,22 @@ export default function GroceryHeaderSearch({
 
 
         </View>
-        
+
 
         <Modal
           visible={isCityModalOpen}
           transparent
           animationType="slide"
-          onRequestClose={closeCityModal}
+          onRequestClose={closeCityModal}  // ✅ FIX 1: Use function
         >
-          <Pressable style={styles.backdrop} onPress={closeCityModal} />
+          <Pressable
+            style={styles.backdrop}
+            onPress={closeCityModal}        // ✅ FIX 2: Use function
+          />
 
           <View style={styles.sheet}>
             <View style={styles.sheetHeader}>
-              <Text style={styles.sheetTitle}>Select city</Text>
+              <Text style={styles.sheetTitle}>Select City</Text>
               <Pressable onPress={closeCityModal} hitSlop={10}>
                 <Text style={styles.sheetClose}>✕</Text>
               </Pressable>
@@ -184,13 +212,15 @@ export default function GroceryHeaderSearch({
               />
             </View>
 
-
             <FlatList
               data={filteredCities}
               keyExtractor={(item) => item}
               keyboardShouldPersistTaps="handled"
               renderItem={({ item }) => {
-                const active = item === selectedCity;
+                // ✅ FIX 3: Extract city name for comparison
+                const cityName = item.split(',')[0];
+                const active = cityName === currentCity;
+
                 return (
                   <Pressable
                     onPress={() => selectCity(item)}
@@ -207,6 +237,7 @@ export default function GroceryHeaderSearch({
             />
           </View>
         </Modal>
+
       </View>
     </LinearGradient>
 
@@ -317,7 +348,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
 
-  
+
 
   // Modal styles
   backdrop: {
