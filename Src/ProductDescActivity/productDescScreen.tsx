@@ -8,10 +8,10 @@ import { Text,
     TouchableOpacity,
     StyleSheet,
  } from "react-native"
-import ProductImg from "../Asset/Icon&img/Images/ProductImg.png"
+import ProductImg from "../Asset/Icon/Images/ProductImg.png"
 import colors from "../Asset/Colors/colors"
-import CartIcon from "../Asset/Icon&img/cartIcon"
-import Lefticon from "../Asset/Icon&img/leftIcon"
+import CartIcon from "../Asset/Icon/cartIcon"
+import Lefticon from "../Asset/Icon/leftIcon"
 export const productDescScreen = ()=>{
     return(
         <SafeAreaView style={{backgroundColor:'rgb(250, 251, 250)'

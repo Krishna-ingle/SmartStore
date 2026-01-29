@@ -11,9 +11,9 @@ import HeadingText from "./ComponentofHomeScreen/headingTextCompo";
 import SearchBarCom from "./ComponentofHomeScreen/SearchBarcomponent";
 import CartButton from "./ComponentofHomeScreen/CartBox&Icon";
 import AddvertisementcardView from "./ComponentofHomeScreen/addvertisementCardViews";
-import offerData from "../Asset/Icon&img/OfferData"; 
+import offerData from "../Asset/Icon/OfferData"; 
 import { CategoriesCardview } from "./ComponentofHomeScreen/categoriesCardview";
-import categoriesData from "../Asset/Icon&img/CategoriesData";
+import categoriesData from "../Asset/Icon/CategoriesData";
 import { ProductCardView } from "./ComponentofHomeScreen/productCardView";
 const HomeScreen = ()=>{
 

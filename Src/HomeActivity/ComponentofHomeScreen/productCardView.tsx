@@ -9,7 +9,7 @@ import {
     Alert
 } from "react-native"
 import colors from "../../Asset/Colors/colors";
-import ProductImg from "../../Asset/Icon&img/Images/ProductImg.png"
+import ProductImg from "../../Asset/Icon/Images/ProductImg.png"
 import { useNavigation } from "@react-navigation/native";
 export const ProductCardView = ()=>{
     const navigation = useNavigation();

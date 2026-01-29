@@ -1,7 +1,7 @@
 import React from "react";
 import { View,SafeAreaView,Text, StyleSheet } from "react-native";
 import { Image, SvgUri } from "react-native-svg";
-import categoriesData from "../../Asset/Icon&img/CategoriesData";
+import categoriesData from "../../Asset/Icon/CategoriesData";
 type prop ={
     name: string;
     color: string;

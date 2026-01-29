@@ -31,7 +31,7 @@ export function ShopCardView({ item, onPress = () => {} }: Props) {
             source={
               item.imageUrl
                 ? { uri: item.imageUrl }
-                : require("../../../Asset/Icon&img/Images/Adimg1.png")
+                : require("../../../Asset/Icon/Images/Adimg1.png")
             }
             style={styles.image}
             resizeMode="cover"

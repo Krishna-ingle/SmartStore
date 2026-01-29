@@ -78,7 +78,7 @@ export const TopShopCard = ({
         source={
           bannerUrl 
             ? { uri: bannerUrl }
-            : require('../../../Asset/Icon&img/Images/ShopImg.png')
+            : require('../../../Asset/Icon/Images/MilkShopImg.png')
         }
         style={styles.bannerImage}
         resizeMode="cover"

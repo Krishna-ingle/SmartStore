@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView,StyleSheet, Text, TextInput ,Image,View} from "react-native";
-import SearchIcon from "../../Asset/Icon&img/searchIcon";
+import SearchIcon from "../../Asset/Icon/searchIcon";
 
 const SearchBarCom = ()=>{
     return(

@@ -1,7 +1,7 @@
  import React from "react";
 import { SafeAreaView,View ,Text, StyleSheet, TouchableOpacity ,Image} from "react-native";
-import CustomerTypeUserImage from "../Asset/Icon&img/customerImage";
-import EmailAuthimg from "../Asset/Icon&img/Images/Bussinessvrndorimg.png"
+import CustomerTypeUserImage from "../Asset/Icon/customerImage";
+import EmailAuthimg from "../Asset/Icon/Images/Bussinessvrndorimg.png"
 import colors from "../Asset/Colors/colors";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../Navigation/RootStackParamList";

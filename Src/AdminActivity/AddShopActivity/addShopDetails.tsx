@@ -269,11 +269,11 @@ const AddShopDetailsScreen = () => {
               style={styles.locationButton}
               onPress={getCurrentLocation}
             >
-              <Text style={styles.locationButtonText}>📍 Get Current Location</Text>
+              <Text style={styles.locationButtonText}>Get Current Location</Text>
             </TouchableOpacity>
 
             {/* Business Details */}
-            <Text style={styles.sectionTitle}>🏢 Business Details</Text>
+            <Text style={styles.sectionTitle}>Business Details</Text>
 
             <InputText
               value={gstNumber}
@@ -320,7 +320,7 @@ const AddShopDetailsScreen = () => {
           <View style={{ height: 120 }} />
         </ScrollView>
 
-<TouchableOpacity
+{/* <TouchableOpacity
   style={{ backgroundColor: 'orange', padding: 10, margin: 5 }}
   onPress={async () => {
     const vendorId = await TokenStorage.getVendorId();
@@ -328,9 +328,9 @@ const AddShopDetailsScreen = () => {
   }}
 >
   <Text style={{ color: 'white' }}>Check Vendor ID</Text>
-</TouchableOpacity>
+</TouchableOpacity> */}
 
-<TouchableOpacity
+{/* <TouchableOpacity
   style={{ backgroundColor: 'purple', padding: 15, margin: 10, borderRadius: 5 }}
   onPress={async () => {
     console.log('🧪 TESTING REFRESH TOKEN...');
@@ -349,8 +349,8 @@ const AddShopDetailsScreen = () => {
   }}
 >
   <Text style={{ color: 'white', textAlign: 'center' }}>🧪 Test Refresh Token</Text>
-</TouchableOpacity>
-
+</TouchableOpacity> */}
+{/* 
 <TouchableOpacity
   style={{ backgroundColor: 'red', padding: 15, margin: 10, borderRadius: 5 }}
   onPress={async () => {
@@ -387,8 +387,8 @@ const AddShopDetailsScreen = () => {
   }}
 >
   <Text style={{ color: 'white', textAlign: 'center' }}>🧹 CLEAR ALL TOKENS FIRST</Text>
-</TouchableOpacity>
-
+</TouchableOpacity> */}
+{/* 
 <TouchableOpacity
   style={{ backgroundColor: 'blue', padding: 15, margin: 10, borderRadius: 5 }}
   onPress={async () => {
@@ -427,10 +427,10 @@ const AddShopDetailsScreen = () => {
   }}
 >
   <Text style={{ color: 'white', textAlign: 'center' }}>🕐 Check Token Age</Text>
-</TouchableOpacity>
+</TouchableOpacity> */}
 
 
-<TouchableOpacity
+{/* <TouchableOpacity
   style={{ backgroundColor: 'lime', padding: 20, margin: 10, borderRadius: 5 }}
   onPress={async () => {
     console.log('🏪 TESTING SHOP CREATION (Ignoring Refresh Issue)...');
@@ -479,9 +479,9 @@ const AddShopDetailsScreen = () => {
   <Text style={{ color: 'black', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
     🏪 TEST SHOP CREATION (Fresh Tokens - 12min left)
   </Text>
-</TouchableOpacity>
+</TouchableOpacity> */}
 
-
+{/* 
 <TouchableOpacity
   style={{ backgroundColor: 'blue', padding: 20, margin: 10, borderRadius: 5 }}
   onPress={async () => {
@@ -517,7 +517,7 @@ const AddShopDetailsScreen = () => {
   <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, fontWeight: 'bold' }}>
     🎯 TEST AUTO-REFRESH (Token is Expired!)
   </Text>
-</TouchableOpacity>
+</TouchableOpacity> */}
 
 
 

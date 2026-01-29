@@ -5,10 +5,10 @@ import {
  Text,StyleSheet,Image,
  TouchableOpacity
  }from "react-native";
-import NotificationIcon from "../../Asset/Icon&img/notificationIcon";
+import NotificationIcon from "../../Asset/Icon/notificationIcon";
 import LinearGradient from "react-native-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-import Profileicon from "../../Asset/Icon&img/profileIcon";
+import Profileicon from "../../Asset/Icon/profileIcon";
 const ProfileNotificatonComp = ()=>{
   const navigation = useNavigation();
      return(<SafeAreaView>

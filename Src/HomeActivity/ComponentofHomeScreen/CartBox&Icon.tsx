@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import CartIcon from "../../Asset/Icon&img/cartIcon";
+import CartIcon from "../../Asset/Icon/cartIcon";
 const CartButton =()=>{
     return(
         <SafeAreaView>

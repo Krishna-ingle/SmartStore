@@ -1,6 +1,9 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+// app Cnter plugin
+
+
 //new codfe for fire base
 apply plugin: 'com.google.gms.google-services'
 
@@ -141,5 +144,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+
 }
+
+
  

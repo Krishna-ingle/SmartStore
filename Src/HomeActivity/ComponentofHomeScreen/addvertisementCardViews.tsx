@@ -1,7 +1,7 @@
 
 import React from "react";
 import { View,SafeAreaView, Text ,StyleSheet, Button, Alert, TouchableOpacity} from "react-native";
-import AddPic1 from "../../Asset/Icon&img/AddvertisementPic1";
+import AddPic1 from "../../Asset/Icon/AddvertisementPic1";
 import LinearGradient from "react-native-linear-gradient";
 type OfferCardProps ={
     offerText: string;

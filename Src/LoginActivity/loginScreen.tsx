@@ -8,7 +8,7 @@ import {
   Alert,
   ActivityIndicator 
 } from "react-native";
-import SmartStoreIcon from "../Asset/Icon&img/smartStoreIcon";
+import SmartStoreIcon from "../Asset/Icon/smartStoreIcon";
 import InputText from "../UIComponent/inputText";
 import { useState } from "react";
 import LinearGradient from "react-native-linear-gradient";

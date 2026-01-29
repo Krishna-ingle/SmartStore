@@ -19,7 +19,7 @@ import {
 
 import citiesData from "../Asset/Data/cities.json";
 import InputText from "../UIComponent/inputText";
-import RegistrationScreenImg from "../Asset/Icon&img/Images/RegistrationScreenImg.png";
+import RegistrationScreenImg from "../Asset/Icon/Images/RegistrationScreenImg.png";
 import colors from "../Asset/Colors/colors";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
@@ -87,11 +87,12 @@ export const UserRegistrationScreen = () => {
             city: userCity.trim(),
         };
 
+
         if (!trimmedData.fullName) return Alert.alert("Error", "Full name is required");
         if (!trimmedData.mobileNumber || trimmedData.mobileNumber.length < 10) return Alert.alert("Error", "Valid mobile number is required");
         if (!trimmedData.password || trimmedData.password.length < 6) return Alert.alert("Error", "Password must be at least 6 characters");
         if (trimmedData.password !== trimmedData.confirmPassword) return Alert.alert("Error", "Passwords do not match");
-        if (!trimmedData.city) return Alert.alert("Error", "City is required");
+        // if (!trimmedData.city) return Alert.alert("Error", "City is required");
 
         try {
             if (role === 'User') {

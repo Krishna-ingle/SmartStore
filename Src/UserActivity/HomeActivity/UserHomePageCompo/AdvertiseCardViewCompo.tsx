@@ -9,9 +9,9 @@ import {
 } from "react-native";
 
 const ADS = [
-  require("../../../Asset/Icon&img/Images/Adimg1.png"),
-  require("../../../Asset/Icon&img/Images/Adimg1.png"),
-  require("../../../Asset/Icon&img/Images/Adimg1.png"),
+  require("../../../Asset/Icon/Images/Adimg1.png"),
+  require("../../../Asset/Icon/Images/Adimg1.png"),
+  require("../../../Asset/Icon/Images/Adimg1.png"),
 ];
 
 export const AddverisementCerdViewCompo = () => {

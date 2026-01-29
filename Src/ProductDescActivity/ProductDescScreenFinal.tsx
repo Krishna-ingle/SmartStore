@@ -8,9 +8,9 @@ import { Text,
     TouchableOpacity,
     StyleSheet,
  } from "react-native"
-import ProductImg from "../Asset/Icon&img/Images/ProductImg.png"
+import ProductImg from "../Asset/Icon/Images/ProductImg.png"
 import colors from "../Asset/Colors/colors"
-import CartIcon from "../Asset/Icon&img/cartIcon"
+import CartIcon from "../Asset/Icon/cartIcon"
 export const productDescScreen = ()=>{
     return(
         <SafeAreaView style={{

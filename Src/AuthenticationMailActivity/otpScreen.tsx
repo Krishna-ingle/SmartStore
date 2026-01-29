@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import colors from '../Asset/Colors/colors';
 import { preset } from '../../jest.config';
-import otpScreen from "../Asset/Icon&img/Images/otpScreen.png";
+import otpScreen from "../Asset/Icon/Images/otpScreen.png";
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../Navigation/RootStackParamList";

@@ -1,4 +1,9 @@
 {
   "name": "Smart_store",
-  "displayName": "Smart_store"
+  "displayName": "Smart_store",
+  "extra": {
+    "eas": {
+      "projectId": "00065089-00ab-4511-ac6a-b05442048a66"
+    }
+  }
 }

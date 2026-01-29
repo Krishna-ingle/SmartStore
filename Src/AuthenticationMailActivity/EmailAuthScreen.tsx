@@ -13,7 +13,7 @@ import colors from "../Asset/Colors/colors";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../Navigation/RootStackParamList";
-import EmailAuthimg from "../Asset/Icon&img/Images/EmailAuthimg.png";
+import EmailAuthimg from "../Asset/Icon/Images/EmailAuthimg.png";
 
 //for redux store
 import { useDispatch } from "react-redux";
